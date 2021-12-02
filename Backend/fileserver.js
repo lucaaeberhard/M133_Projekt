@@ -7,5 +7,4 @@ export const frontendFiles = context => send(
     {
         root: `${Deno.cwd()}/Frontend`,
         index: "index.html"
-    }
-)
+    });
