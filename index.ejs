@@ -28,16 +28,20 @@
                          <%= products[i].name %>
 
                          <form action='/deleteProduct' method="POST">
-                            <input hidden type="text" id="deleteProductName" name="deleteProductName" value="<%= products[i].name" %>">
+                            <input hidden type="text" id="deleteProductName" name="deleteProductName" value="<%= products[i].name %>">
 
                             <button type="submit" class="btn btn-danger">
                                 - Löschen
                             </button>
                          </form>
 
-                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
-                             Bearbeiten
-                         </button>
+                         <form id="openUpdateModal">
+                            <input hidden type="text" id="oldProductName" name="oldProductName" value="<%= products[i].name %>">
+                            <input hidden type="text" id="oldProductId" name="oldProductId" value="<%= products[i].id %>">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
+                                Bearbeiten
+                            </button>
+                        </form>
                      </li>
          
                  <% } %>
@@ -100,13 +104,13 @@
             </button>
             </div>
 
-            <form action='/editProduct' method="POST">
+            <form action='/updateProduct' method="POST">
 
                 <div class="modal-body">
                 
                     <div class="form-group">
                         <label>Was möchtest du ändern?</label>
-                        <input name="newProductName" type="text" class="form-control" placeholder="">
+                        <input name="newProductName" id="newProductName" type="text" class="form-control" placeholder="">
                     </div>
 
                 </div>
@@ -125,5 +129,13 @@
 
 
 </body>
+
+<script type="text/javascript">
+    $("#openUpdateModal").click(function () {
+        let oldProductName = $("#oldProductName").val();
+        let oldProductId = $("#oldProductId").val();
+        $("#newProductName").val(oldProductName);
+    });
+</script>
 
 </html>
