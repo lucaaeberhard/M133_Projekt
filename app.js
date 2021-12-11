@@ -62,7 +62,14 @@ router.post("/updateProduct", async (ctx) => {
 
     if(nameValue){
         let newProduct = {id:oldProductId, name:newProductName}
-        shoppingList.splice(oldProductName, 1, newProduct)
+        
+        const index = shoppingList.findIndex(function(shoppinglist, index) {
+            if(shoppinglist.id == oldProductId)
+                return true;
+        });
+        
+        shoppingList.splice(index, 1, newProduct);
+        
     }
 
     ctx.response.redirect("/"); // Zur Startseite weiterführen
