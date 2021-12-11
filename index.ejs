@@ -37,8 +37,8 @@
                          </form>
 
                          <form id="openUpdateModal<%= i %>">
-                            <input hidden type="text" id="oldProductName" name="oldProductName<%= i %>" value="<%= products[i].name %>">
-                            <input hidden type="text" id="oldProductId" name="oldProductId<%= i %>" value="<%= products[i].id %>">
+                            <input hidden type="text" id="oldProductName" name="oldProductName" value="<%= products[i].name %>">
+                            <input hidden type="text" id="oldProductId" name="oldProductId" value="<%= products[i].id %>">
                             <button id="<%= i %>" onclick="bearbeiteButton(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
                                 Bearbeiten
                             </button>
@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label>Was möchtest du ändern?</label>
                         <input name="newProductName" id="newProductName" type="text" class="form-control">
-                        <input hidden name="newProductId" id="newProductId" type="text" class="form-control">
+                        <input hidden name="oldProductId" id="oldProductId" type="text" class="form-control">
                     </div>
 
                 </div>
@@ -138,7 +138,7 @@
         let productName = document.forms[currentForm].elements["oldProductName"].value;
         let productId = document.forms[currentForm].elements["oldProductId"].value;
         $("#newProductName").val(productName);
-        $("#newProductId").val(productId);
+        $("#oldProductId").val(productId);
     }
 </script>
 

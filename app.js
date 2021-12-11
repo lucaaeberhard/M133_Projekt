@@ -54,13 +54,12 @@ router.post("/deleteProduct", async (ctx) => {
 
 router.post("/updateProduct", async (ctx) => {
     let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
-    let oldProductName = formContent.get("oldProductName"); // oldProductName wird ausgelesen
     let oldProductId = formContent.get("oldProductId"); // oldProductId wird ausgelesen
     let newProductName = formContent.get("newProductName"); // newProductName wird ausgelesen
 
-    console.log("Ein updateProduct post request erhalten für: " + oldProductName + " -> " + newProductName);
+    console.log("Ein updateProduct post request erhalten für: " + newProductName);
 
-    if(nameValue){
+    if(newProductName){
         let newProduct = {id:oldProductId, name:newProductName}
         
         const index = shoppingList.findIndex(function(shoppinglist, index) {
