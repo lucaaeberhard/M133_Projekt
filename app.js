@@ -35,6 +35,16 @@ router.post("/addProduct", async (ctx) => {
     ctx.response.redirect("/"); // Zur Startseite weiterführen
 });
 
+router.delete("/deleteProduct", async (ctx) => {
+    let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
+    let deleteProduct = formContent.get("deleteProductId"); // deleteProductId wird ausgelesen
+
+    const result = shoppingList.where("id", toString(deleteProduct)).delete();
+    console.log(result)
+
+    ctx.response.redirect("/"); // Zur Startseite weiterführen
+})
+
 app.use(router.routes());
 app.use(router.allowedMethods());
 
