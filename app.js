@@ -37,10 +37,15 @@ router.post("/addProduct", async (ctx) => {
 
 router.post("/deleteProduct", async (ctx) => {
     let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
-    let deleteProduct = formContent.get("deleteProductName"); // deleteProductId wird ausgelesen
+    let deleteProduct = formContent.get("deleteProductId"); // deleteProductId wird ausgelesen
 
-    shoppingList.splice(deleteProduct, 1);
- 
+    const index = shoppingList.findIndex(function(shoppinglist, index) {
+        if(shoppinglist.id == deleteProduct)
+            return true;
+    });
+    
+    shoppingList.splice(index, 1);
+    
     console.log("Ein deleteProduct post request erhalten für: " + deleteProduct);
 
     ctx.response.redirect("/"); // Zur Startseite weiterführen
