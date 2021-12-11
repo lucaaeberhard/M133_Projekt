@@ -36,10 +36,10 @@
                             </button>
                          </form>
 
-                         <form id="openUpdateModal">
-                            <input hidden type="text" id="oldProductName" name="oldProductName" value="<%= products[i].name %>">
-                            <input hidden type="text" id="oldProductId" name="oldProductId" value="<%= products[i].id %>">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
+                         <form id="openUpdateModal<%= i %>">
+                            <input hidden type="text" id="oldProductName" name="oldProductName<%= i %>" value="<%= products[i].name %>">
+                            <input hidden type="text" id="oldProductId" name="oldProductId<%= i %>" value="<%= products[i].id %>">
+                            <button id="<%= i %>" onclick="bearbeiteButton(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
                                 Bearbeiten
                             </button>
                         </form>
@@ -111,7 +111,8 @@
                 
                     <div class="form-group">
                         <label>Was möchtest du ändern?</label>
-                        <input name="newProductName" id="newProductName" type="text" class="form-control" placeholder="">
+                        <input name="newProductName" id="newProductName" type="text" class="form-control">
+                        <input hidden name="newProductId" id="newProductId" type="text" class="form-control">
                     </div>
 
                 </div>
@@ -132,11 +133,13 @@
 </body>
 
 <script type="text/javascript">
-    $("#openUpdateModal").click(function () {
-        let oldProductName = $("#oldProductName").val();
-        let oldProductId = $("#oldProductId").val();
-        $("#newProductName").val(oldProductName);
-    });
+    function bearbeiteButton(clickedId) {
+        let currentForm = "openUpdateModal" + clickedId;
+        let productName = document.forms[currentForm].elements["oldProductName"].value;
+        let productId = document.forms[currentForm].elements["oldProductId"].value;
+        $("#newProductName").val(productName);
+        $("#newProductId").val(productId);
+    }
 </script>
 
 </html>
