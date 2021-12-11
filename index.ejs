@@ -20,6 +20,7 @@
         </div>
 
         <div class="card-body">
+
             <ul class="list-group">
 
                 <% for(let i=0; i < products.length; i++) { %>
@@ -27,22 +28,24 @@
                      <li class="list-group-item">
                          <%= products[i].name %>
 
-                         <form action='/deleteProduct' method="POST">
+                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 
-                            <input hidden type="text" id="deleteProductId" name="deleteProductId" value="<%= products[i].id %>">
+                            <form action='/deleteProduct' method="POST">
+                                <input hidden type="text" id="deleteProductId" name="deleteProductId" value="<%= products[i].id %>">
+                                <button type="submit" class="btn btn-danger mr-4">
+                                    Löschen
+                                </button>
+                            </form>
 
-                            <button type="submit" class="btn btn-danger">
-                                - Löschen
-                            </button>
-                         </form>
-
-                         <form id="openUpdateModal<%= i %>">
-                            <input hidden type="text" id="oldProductName" name="oldProductName" value="<%= products[i].name %>">
-                            <input hidden type="text" id="oldProductId" name="oldProductId" value="<%= products[i].id %>">
-                            <button id="<%= i %>" onclick="bearbeiteButton(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
-                                Bearbeiten
-                            </button>
-                        </form>
+                            <form id="openUpdateModal<%= i %>">
+                                <input hidden type="text" id="oldProductName" name="oldProductName" value="<%= products[i].name %>">
+                                <input hidden type="text" id="oldProductId" name="oldProductId" value="<%= products[i].id %>">
+                                <button id="<%= i %>" onclick="bearbeiteButton(this.id)" type="button" class="btn btn-info" data-toggle="modal" data-target="#editProductModal">
+                                    Bearbeiten
+                                </button>
+                            </form>
+                            
+                        </div>
                      </li>
          
                  <% } %>
