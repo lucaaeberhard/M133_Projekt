@@ -28,7 +28,8 @@
                          <%= products[i].name %>
 
                          <form action='/deleteProduct' method="POST">
-                            <input hidden type="text" id="deleteProductName" name="deleteProductName" value="<%= products[i].name %>">
+
+                            <input hidden type="text" id="deleteProductId" name="deleteProductId" value="<%= products[i].id %>">
 
                             <button type="submit" class="btn btn-danger">
                                 - Löschen
