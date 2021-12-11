@@ -27,12 +27,13 @@
                      <li class="list-group-item">
                          <%= products[i].name %>
 
-                         <button type="button" class="btn btn-danger">
-                            - Löschen
-                            <form action='/deleteProduct' method="DELETE">
+                         <form action='/deleteProduct' method="DELETE">
                             <input hidden type="text" id="deleteProductId " name="deleteProductId" value=<% products[i].id %>>
-                            </form>
-                        </button>
+
+                            <button type="submit" class="btn btn-danger">
+                                - Löschen
+                            </button>
+                         </form>
                      </li>
          
                  <% } %>
