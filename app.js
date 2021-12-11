@@ -35,12 +35,30 @@ router.post("/addProduct", async (ctx) => {
     ctx.response.redirect("/"); // Zur Startseite weiterführen
 });
 
-router.delete("/deleteProduct", async (ctx) => {
+router.post("/deleteProduct", async (ctx) => {
     let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
-    let deleteProduct = formContent.get("deleteProductId"); // deleteProductId wird ausgelesen
+    let deleteProduct = formContent.get("deleteProductName"); // deleteProductId wird ausgelesen
 
-    const result = shoppingList.where("id", toString(deleteProduct)).delete();
-    console.log(result)
+    shoppingList.splice(deleteProduct, 1);
+ 
+    console.log("Ein deleteProduct post request erhalten für: " + deleteProduct);
+
+    ctx.response.redirect("/"); // Zur Startseite weiterführen
+})
+
+
+router.post("/updateProduct", async (ctx) => {
+    let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
+    let oldProductName = formContent.get("oldProductName"); // oldProductName wird ausgelesen
+    let oldProductId = formContent.get("oldProductId"); // oldProductId wird ausgelesen
+    let newProductName = formContent.get("newProductName"); // newProductName wird ausgelesen
+
+    console.log("Ein updateProduct post request erhalten für: " + oldProductName + " -> " + newProductName);
+
+    if(nameValue){
+        let newProduct = {id:oldProductId, name:newProductName}
+        shoppingList.splice(oldProductName, 1, newProduct)
+    }
 
     ctx.response.redirect("/"); // Zur Startseite weiterführen
 })
