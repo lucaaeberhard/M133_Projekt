@@ -1,10 +1,10 @@
 'use strict';
-import {Application, Router, renderFileToString} from "./deps.js";
+import { Application, Router, renderFileToString } from "./deps.js";
 
 let shoppingList = [
-    {id:0, name:"Brot"},
-    {id:1, name:"Milch"},
-    {id:2, name:"Bananen"}
+    { id: 0, name: "Brot" },
+    { id: 1, name: "Milch" },
+    { id: 2, name: "Bananen" }
 ];
 
 const app = new Application();
@@ -14,21 +14,21 @@ let counter = 3;
 
 router.get("/", async (ctx) => {
     ctx.response.body = await renderFileToString(Deno.cwd() + "/index.ejs", {
-        title:"Einkaufsliste",
+        title: "Einkaufsliste",
         products: shoppingList
     });
 });
 
 router.post("/addProduct", async (ctx) => {
 
-    let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
+    let formContent = await ctx.request.body({ type: 'form' }).value; // Input vom Formular wird übergeben
     let nameValue = formContent.get("newProductName"); // newProductName wird ausgelesen
 
     console.log("Ein addProduct post request erhalten für: " + nameValue);
 
-    if(nameValue){
+    if (nameValue) {
         shoppingList.push(
-            {id:counter++, name:nameValue} // Nimmt die nächsthöhere Nummer
+            { id: counter++, name: nameValue } // Nimmt die nächsthöhere Nummer
         );
     }
 
@@ -36,16 +36,16 @@ router.post("/addProduct", async (ctx) => {
 });
 
 router.post("/deleteProduct", async (ctx) => {
-    let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
+    let formContent = await ctx.request.body({ type: 'form' }).value; // Input vom Formular wird übergeben
     let deleteProduct = formContent.get("deleteProductId"); // deleteProductId wird ausgelesen
 
-    const index = shoppingList.findIndex(function(shoppinglist, index) {
-        if(shoppinglist.id == deleteProduct)
+    const index = shoppingList.findIndex(function (shoppinglist, index) {
+        if (shoppinglist.id == deleteProduct)
             return true;
     });
-    
+
     shoppingList.splice(index, 1);
-    
+
     console.log("Ein deleteProduct post request erhalten für: " + deleteProduct);
 
     ctx.response.redirect("/"); // Zur Startseite weiterführen
@@ -53,22 +53,21 @@ router.post("/deleteProduct", async (ctx) => {
 
 
 router.post("/updateProduct", async (ctx) => {
-    let formContent = await ctx.request.body({type:'form'}).value; // Input vom Formular wird übergeben
-    let oldProductId = formContent.get("oldProductId"); // oldProductId wird ausgelesen
+    let formContent = await ctx.request.body({ type: 'form' }).value; // Input vom Formular wird übergeben
+    let oldProductId = formContent.get("oldProductIdVal"); // oldProductId wird ausgelesen
     let newProductName = formContent.get("newProductName"); // newProductName wird ausgelesen
 
     console.log("Ein updateProduct post request erhalten für: " + newProductName);
 
-    if(newProductName){
-        let newProduct = {id:oldProductId, name:newProductName}
-        
-        const index = shoppingList.findIndex(function(shoppinglist, index) {
-            if(shoppinglist.id == oldProductId)
+    if (newProductName) {
+
+        const index = shoppingList.findIndex(function (shoppinglist, index) {
+            if (shoppinglist.id == oldProductId)
                 return true;
         });
-        
-        shoppingList.splice(index, 1, newProduct);
-        
+
+        shoppingList.splice(index, 1, { id: oldProductId, name: newProductName });
+
     }
 
     ctx.response.redirect("/"); // Zur Startseite weiterführen
@@ -81,4 +80,4 @@ app.addEventListener('listen', () => {
     console.log("Server läuft");
 });
 
-await app.listen({port:8000});
+await app.listen({ port: 8000 });
